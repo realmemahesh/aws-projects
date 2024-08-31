@@ -17,8 +17,10 @@ jobs:
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v2
     - name: docker build  
-      run: docker build -t nginx:v1
-    - name: docker tag
-      run: docker tag nginx:latest 026090544525.dkr.ecr.us-west-1.amazonaws.com/nginx:latest
-    - name: docker push
-      run: docker push 026090544525.dkr.ecr.us-west-1.amazonaws.com/nginx:latest
+      run: docker build -t nginx:v1 .
+    - name: docker tag & push 
+      env:
+        TAG: v1
+      run: |
+        docker tag nginx:latest 026090544525.dkr.ecr.us-west-1.amazonaws.com/nginx:$TAG
+        docker push 026090544525.dkr.ecr.us-west-1.amazonaws.com/nginx:$TAG
